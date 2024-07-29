@@ -20,17 +20,13 @@ contract CCIPTokenTransfer is Script, Helper {
         uint256 senderPrivateKey = vm.envUint("PRIVATE_KEY");
         vm.startBroadcast(senderPrivateKey);
 
-        (address sourceRouter, address linkToken, , ) = getConfigFromNetwork(
-            source
-        );
-        (, , , uint64 destinationChainId) = getConfigFromNetwork(destination);
+        (address sourceRouter, address linkToken,,) = getConfigFromNetwork(source);
+        (,,, uint64 destinationChainId) = getConfigFromNetwork(destination);
 
         IERC20(tokenToSend).approve(sourceRouter, amount);
 
-        Client.EVMTokenAmount[]
-            memory tokensToSendDetails = new Client.EVMTokenAmount[](1);
-        Client.EVMTokenAmount memory tokenToSendDetails = Client
-            .EVMTokenAmount({token: tokenToSend, amount: amount});
+        Client.EVMTokenAmount[] memory tokensToSendDetails = new Client.EVMTokenAmount[](1);
+        Client.EVMTokenAmount memory tokenToSendDetails = Client.EVMTokenAmount({token: tokenToSend, amount: amount});
 
         tokensToSendDetails[0] = tokenToSendDetails;
 
@@ -38,28 +34,17 @@ contract CCIPTokenTransfer is Script, Helper {
             receiver: abi.encode(receiver),
             data: "",
             tokenAmounts: tokensToSendDetails,
-            extraArgs: Client._argsToBytes(
-                Client.EVMExtraArgsV1({gasLimit: 0})
-            ),
+            extraArgs: Client._argsToBytes(Client.EVMExtraArgsV1({gasLimit: 0})),
             feeToken: payFeesIn == PayFeesIn.LINK ? linkToken : address(0)
         });
 
-        uint256 fees = IRouterClient(sourceRouter).getFee(
-            destinationChainId,
-            message
-        );
+        uint256 fees = IRouterClient(sourceRouter).getFee(destinationChainId, message);
 
         if (payFeesIn == PayFeesIn.LINK) {
             IERC20(linkToken).approve(sourceRouter, fees);
-            messageId = IRouterClient(sourceRouter).ccipSend(
-                destinationChainId,
-                message
-            );
+            messageId = IRouterClient(sourceRouter).ccipSend(destinationChainId, message);
         } else {
-            messageId = IRouterClient(sourceRouter).ccipSend{value: fees}(
-                destinationChainId,
-                message
-            );
+            messageId = IRouterClient(sourceRouter).ccipSend{value: fees}(destinationChainId, message);
         }
 
         console.log(

@@ -17,3 +17,5 @@ chmod +x setup.sh
 ```sh
 forge test --match-test test_tranferTokensFromEoaToEoaPayFeesInLink -vvvv --fork-url $AVALANCHE_FUJI_RPC_URL
 ```
+
+**ONLY For testing Chainlink's CCIP. Not actively maintaining this project.**
