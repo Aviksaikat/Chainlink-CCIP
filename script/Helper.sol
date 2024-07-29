@@ -115,6 +115,18 @@ contract Helper {
     address constant ghoArbitrumSepolia = 0xb13Cfa6f8B2Eed2C37fB00fF0c1A59807C585810;
 
     constructor() {
+        supportedNetworksMapping["Ethereum Sepolia"] = SupportedNetworks.ETHEREUM_SEPOLIA;
+        supportedNetworksMapping["Avalanche Fuji"] = SupportedNetworks.AVALANCHE_FUJI;
+        supportedNetworksMapping["Arbitrum Sepolia"] = SupportedNetworks.ARBITRUM_SEPOLIA;
+        supportedNetworksMapping["Polygon Amoy"] = SupportedNetworks.POLYGON_AMOY;
+        supportedNetworksMapping["BNB Chain Testnet"] = SupportedNetworks.BNB_CHAIN_TESTNET;
+        supportedNetworksMapping["Optimism Sepolia"] = SupportedNetworks.OPTIMISM_SEPOLIA;
+        supportedNetworksMapping["Base Sepolia"] = SupportedNetworks.BASE_SEPOLIA;
+        supportedNetworksMapping["Wemix Testnet"] = SupportedNetworks.WEMIX_TESTNET;
+        supportedNetworksMapping["Kroma Sepolia"] = SupportedNetworks.KROMA_SEPOLIA;
+        supportedNetworksMapping["Gnosis Chiado"] = SupportedNetworks.GNOSIS_CHIADO;
+        supportedNetworksMapping["Celo Alfajores"] = SupportedNetworks.CELO_ALFAJORES;
+
         networks[SupportedNetworks.ETHEREUM_SEPOLIA] = "Ethereum Sepolia";
         networks[SupportedNetworks.AVALANCHE_FUJI] = "Avalanche Fuji";
         networks[SupportedNetworks.ARBITRUM_SEPOLIA] = "Arbitrum Sepolia";
